@@ -16,7 +16,7 @@ const Add = () => {
 
         initialtodo.push(todos)
 
-        // localStorage.setItem("todos", todos)
+        // localStorage.setItem("todos", JSON.stringify(todos));
         localStorage.setItem("todos", JSON.stringify(initialtodo))
         nav("/")
 
