@@ -1,7 +1,8 @@
 import React from 'react'
 import { FaEye } from 'react-icons/fa';
-import { Link } from 'react-router-dom'
-import { useGetProductQuery } from '../services/productApi';
+import { Link, useParams } from 'react-router-dom'
+import { useGetProductCategoryQuery, useGetProductQuery } from '../services/productApi';
+import { useGetCategoryQuery } from '../services/categoryApi';
 
 const Home = () => {
 
@@ -26,9 +27,16 @@ const Home = () => {
 
     // const productfromserver = useGetProductQuery()
 
+    const {cat} = useParams()
+    
     const { data, isLoading } = useGetProductQuery()
+    const { data: categoryproduct } = useGetProductCategoryQuery(cat)
+    const { data: category } = useGetCategoryQuery()
 
-    console.log("product from server", data)
+    console.log("product from server", categoryproduct)
+
+
+    
 
     return (
         <>
@@ -49,14 +57,25 @@ const Home = () => {
             <section class="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
                 <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div class="mx-auto max-w-md text-center">
-                        <h2 class="font-serif text-2xl font-bold sm:text-3xl">Nepal Electronic Shop</h2>
+                        <h2 class="font-serif text-2xl font-bold sm:text-3xl">Nepal Shop</h2>
+                    </div>
+
+                    <h2 className='font-bold text-2xl'>All Categories</h2>
+                    <div>
+                        <ul>
+                            <Link to={`/`}><li>All</li></Link>
+                            {category?.map((cat) => (
+                                <Link to={`/${cat}`}><li>{cat}</li></Link>
+                            ))}
+                        </ul>
                     </div>
 
                     <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4 lg:mt-16">
-                        {data?.map((product,index) => (
+                        {/* {data?.map((product, index) => ( */}
+                        {categoryproduct?.map((product, index) => (
                             <article class="relative flex flex-col overflow-hidden rounded-lg border" key={index}>
                                 <div class="aspect-square overflow-hidden">
-                                 <Link to={`/view/${index}`}> <img class="h-full w-full object-cover transition-all duration-300 group-hover:scale-125" src={product?.image} alt="" /></Link>
+                                    <Link to={`/view/${product?.id}`}> <img class="h-full w-full object-cover transition-all duration-300 group-hover:scale-125" src={product?.image} alt="" /></Link>
                                 </div>
                                 <div class="absolute top-0 m-2 rounded-full bg-white">
                                     <p class="rounded-full bg-emerald-500 p-1 text-[8px] font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3">Sale</p>
