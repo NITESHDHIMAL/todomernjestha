@@ -5,7 +5,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://fakestoreapi.com/' }),
   endpoints: (builder) => ({
     getProduct: builder.query({
-      query: () => `/products`,
+      query: (par) => `/products${par}`,
     }),
     getProductId: builder.query({
       query: (id) => `/products/${id}`,
@@ -14,7 +14,15 @@ export const productApi = createApi({
       query: (cat) => `/products/category/${cat}`,
     }),
 
+    storeProduct: builder.mutation({
+      query: (formData) => ({ 
+        url:`/products`,
+        method: 'POST',
+        body: formData
+      })
+    }),
+
 
   }),
 })
-export const { useGetProductQuery, useGetProductIdQuery, useGetProductCategoryQuery } = productApi
+export const { useGetProductQuery, useGetProductIdQuery, useGetProductCategoryQuery, useStoreProductMutation,  } = productApi
