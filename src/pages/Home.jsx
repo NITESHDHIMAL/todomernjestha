@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaEye } from 'react-icons/fa';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useGetProductCategoryQuery, useGetProductQuery } from '../services/productApi';
+import { useDeleteProductMutation, useGetProductCategoryQuery, useGetProductQuery } from '../services/productApi';
 import { useGetCategoryQuery } from '../services/categoryApi';
 
 const Home = () => {
@@ -38,10 +38,27 @@ const Home = () => {
     const { data, isLoading } = useGetProductQuery(par?.search)
     const { data: categoryproduct } = useGetProductCategoryQuery(cat)
     const { data: category } = useGetCategoryQuery()
+    const [ deleteProduct ] = useDeleteProductMutation()
+
+
 
     const product = cat ? categoryproduct : data;
 
-    const [ search, setSearch ] = useState()
+    const [search, setSearch] = useState('')
+
+
+    const filteredData = product?.filter((item) =>
+        item?.title.toLowerCase().includes(search.toLocaleLowerCase())
+    );
+
+    async function removeProduct(id) {
+        try {
+            const deleteddata = await deleteProduct(id).unwrap()
+            console.log("Product deleted Successfully", deleteddata)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
 
     return (
@@ -57,6 +74,7 @@ const Home = () => {
                 ))}
             </div> 
             <Link to={'/add'}> <button className='bg-green-400 px-4 py-2 rounded m-2'>Add</button></Link> */}
+
 
 
 
@@ -96,10 +114,15 @@ const Home = () => {
                     </div>
                     {/* <Link to={'/?sort=desc'}> Desc </Link> */}
 
+                    <div class="mt-4">
+                        <input type="title" placeholder='search here...' id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    </div>
+
                     <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4 lg:mt-16">
                         {/* {categoryproduct?.map((product, index) => ( */}
                         {/* {data?.map((product, index) => ( */}
-                        {product?.map((product, index) => (
+                        {/* {product?.map((product, index) => ( */}
+                        {filteredData?.map((product, index) => (
                             <article class="relative flex flex-col overflow-hidden rounded-lg border" key={index}>
                                 <div class="aspect-square overflow-hidden">
                                     <Link to={`/view/${product?.id}`}> <img class="h-full w-full object-cover transition-all duration-300 group-hover:scale-125" src={product?.image} alt="" /></Link>
@@ -118,16 +141,12 @@ const Home = () => {
                                     <div class="flex w-full items-center justify-center bg-gray-100 text-xs uppercase transition group-hover:bg-emerald-600 group-hover:text-white">Add</div>
                                     <div class="flex items-center justify-center bg-gray-200 px-5 transition group-hover:bg-emerald-500 group-hover:text-white">+</div>
                                 </button>
+                                <button className='bg-green-600 py-2 text-white' onClick={()=> removeProduct(product?.id)}>Delete</button>
                             </article>
                         ))}
                     </div>
                 </div>
             </section>
-
-
-                        <form action="">
-                            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-                        </form>
 
             <nav aria-label="Page navigation example">
                 <ul class="inline-flex -space-x-px text-base h-10">
@@ -154,10 +173,6 @@ const Home = () => {
                     </li>
                 </ul>
             </nav>
-
-
-
-
 
         </>
     )
