@@ -78,10 +78,10 @@ const Home = () => {
 
 
 
-            <section class="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
-                <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-                    <div class="mx-auto max-w-md text-center">
-                        <h2 class="font-serif text-2xl font-bold sm:text-3xl">Nepal Shop</h2>
+            <section className="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
+                <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-md text-center">
+                        <h2 className="font-serif text-2xl font-bold sm:text-3xl">Nepal Shop</h2>
                     </div>
 
                     <h2 className='font-bold text-2xl'>All Categories</h2>
@@ -114,32 +114,32 @@ const Home = () => {
                     </div>
                     {/* <Link to={'/?sort=desc'}> Desc </Link> */}
 
-                    <div class="mt-4">
-                        <input type="title" placeholder='search here...' id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <div className="mt-4">
+                        <input type="title" placeholder='search here...' id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
 
-                    <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4 lg:mt-16">
+                    <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4 lg:mt-16">
                         {/* {categoryproduct?.map((product, index) => ( */}
                         {/* {data?.map((product, index) => ( */}
                         {/* {product?.map((product, index) => ( */}
                         {filteredData?.map((product, index) => (
-                            <article class="relative flex flex-col overflow-hidden rounded-lg border" key={index}>
-                                <div class="aspect-square overflow-hidden">
-                                    <Link to={`/view/${product?.id}`}> <img class="h-full w-full object-cover transition-all duration-300 group-hover:scale-125" src={product?.image} alt="" /></Link>
+                            <article className="relative flex flex-col overflow-hidden rounded-lg border" key={index}>
+                                <div className="aspect-square overflow-hidden">
+                                    <Link to={`/view/${product?.id}`}> <img className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125" src={product?.image} alt="" /></Link>
                                 </div>
-                                <div class="absolute top-0 m-2 rounded-full bg-white">
-                                    <p class="rounded-full bg-emerald-500 p-1 text-[8px] font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3">Sale</p>
+                                <div className="absolute top-0 m-2 rounded-full bg-white">
+                                    <p className="rounded-full bg-emerald-500 p-1 text-[8px] font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3">Sale</p>
                                 </div>
-                                <div class="my-4 mx-auto flex w-10/12 flex-col items-start justify-between">
-                                    <div class="mb-2 flex">
-                                        <p class="mr-3 text-sm font-semibold">Rs.{product?.price}</p>
-                                        <del class="text-xs text-gray-400"> $79.00 </del>
+                                <div className="my-4 mx-auto flex w-10/12 flex-col items-start justify-between">
+                                    <div className="mb-2 flex">
+                                        <p className="mr-3 text-sm font-semibold">Rs.{product?.price}</p>
+                                        <del className="text-xs text-gray-400"> $79.00 </del>
                                     </div>
-                                    <h3 class="mb-2 text-sm text-gray-400">{product?.title}</h3>
+                                    <h3 className="mb-2 text-sm text-gray-400">{product?.title}</h3>
                                 </div>
-                                <button class="group mx-auto mb-2 flex h-10 w-10/12 items-stretch overflow-hidden rounded-md text-gray-600">
-                                    <div class="flex w-full items-center justify-center bg-gray-100 text-xs uppercase transition group-hover:bg-emerald-600 group-hover:text-white">Add</div>
-                                    <div class="flex items-center justify-center bg-gray-200 px-5 transition group-hover:bg-emerald-500 group-hover:text-white">+</div>
+                                <button className="group mx-auto mb-2 flex h-10 w-10/12 items-stretch overflow-hidden rounded-md text-gray-600">
+                                    <div className="flex w-full items-center justify-center bg-gray-100 text-xs uppercase transition group-hover:bg-emerald-600 group-hover:text-white">Add</div>
+                                    <div className="flex items-center justify-center bg-gray-200 px-5 transition group-hover:bg-emerald-500 group-hover:text-white">+</div>
                                 </button>
                                 <button className='bg-green-600 py-2 text-white' onClick={()=> removeProduct(product?.id)}>Delete</button>
                             </article>
